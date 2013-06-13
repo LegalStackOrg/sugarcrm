@@ -9,13 +9,14 @@ $dashletData['deqScheduleDashlet']['searchFields'] = array(
 
 $dashletData['deqScheduleDashlet']['columns'] = array(
     'data_type' => array(
-        'width' => '3',
-        'label' => 'LBL_DEQ_SCHEDULE_MODULE',
+        'width' => '2',
+        'label' => '',
         'source' => 'non-db',
         'default' => true,
+        'sortable' => false,		
     ),
     'date_start' => array(
-        'width' => '5',
+        'width' => '6',
         'label' => 'LBL_DASHLET_DATE',
         'default' => true,
     ),

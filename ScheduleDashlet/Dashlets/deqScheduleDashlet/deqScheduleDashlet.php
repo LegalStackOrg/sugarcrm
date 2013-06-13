@@ -49,19 +49,18 @@ class deqScheduleDashlet extends DashletGeneric
             {
                 $this->lvs->data['data'][$row]['NAME'] = substr($this->lvs->data['data'][$row]['NAME'], 9);
                 $this->lvs->data['data'][$row]['MODULE'] = 'ProjectTask';
-                $this->lvs->data['data'][$row]['DATA_TYPE'] = '<img alt="" src="custom/modules/Home/Dashlets/deqScheduleDashlet/project_task_24.png" />';
+                $this->lvs->data['data'][$row]['DATA_TYPE'] = '<img alt="Project Task" src="custom/modules/Home/Dashlets/deqScheduleDashlet/project_task_24.png" />';
             }
             // then type is task
             else
             {
                 $this->lvs->data['data'][$row]['MODULE'] = 'Tasks';
-                $this->lvs->data['data'][$row]['DATA_TYPE'] = '<img alt="" src="custom/modules/Home/Dashlets/deqScheduleDashlet/task_24.png" />';
+                $this->lvs->data['data'][$row]['DATA_TYPE'] = '<img alt="Tasks" src="custom/modules/Home/Dashlets/deqScheduleDashlet/task_24.png" />';
             }
 
             $this->lvs->data['data'][$row]['TIME'] = substr($this->lvs->data['data'][$row]['DATE_START'], 10);
             $date_db = $timedate->to_db_date($this->lvs->data['data'][$row]['DATE_START']);
             $this->lvs->data['data'][$row]['DATE_START'] = substr($this->lvs->data['data'][$row]['DATE_START'], 0, 10);
-
             $this->lvs->data['data'][$row]['DATE_START'] = $this->getDateString($date_db, $this->lvs->data['data'][$row]['DATE_START']);
 
         }

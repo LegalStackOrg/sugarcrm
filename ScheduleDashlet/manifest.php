@@ -10,15 +10,15 @@ $manifest = array(
         'ULT'
     ),
     'readme' => '',
-    'key' => 'dllc',
+    'key' => 'deq',
     'author' => 'Data Equity LLC',
-    'description' => 'Data Equity LLC Schedule Dashlet',
+    'description' => 'My Schedule Dashlet by Data Equity LLC',
     'icon' => '',
     'is_uninstallable' => true,
     'name' => 'deqScheduleDashlet',
-    'published_date' => '2013-05-27 21:12:30',
+    'published_date' => '2013-06-13 16:00:00',
     'type' => 'module',
-    'version' => '1.2',
+    'version' => '1.3',
     'remove_tables' => '',
 );
 

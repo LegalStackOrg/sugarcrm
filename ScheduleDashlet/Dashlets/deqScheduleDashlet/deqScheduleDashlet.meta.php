@@ -7,7 +7,5 @@ $dashletMeta['deqScheduleDashlet'] = array(
     'title' => translate('LBL_DEQ_SCHEDULE', 'Home'),
     'description' => 'A customizable Schedule view.',
     'category' => 'Module Views',
-    //'icon' => 'custom/modules/Home/Dashlets/deqScheduleDashlet/task_24.png',
-    // need to put icon in theme
-    // see 94th line @include/MySugar/DashletsDialog/DashletsDialog.php
+    'icon' => 'custom/modules/Home/Dashlets/deqScheduleDashlet/meeting_24.png',
 );
