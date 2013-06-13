@@ -10,10 +10,10 @@ $dashletData['deqScheduleDashlet']['searchFields'] = array(
 $dashletData['deqScheduleDashlet']['columns'] = array(
     'data_type' => array(
         'width' => '2',
-        'label' => '',
+        'label' => ' ',
+        'sortable' => false,				
         'source' => 'non-db',
         'default' => true,
-        'sortable' => false,		
     ),
     'date_start' => array(
         'width' => '6',
