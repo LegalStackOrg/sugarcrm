@@ -9,18 +9,12 @@ $dashletData['deqCommunicationsDashlet']['searchFields'] = array(
  
 $dashletData['deqCommunicationsDashlet']['columns'] = array(
 	'data_type' => array(
-    'width' => '3',
-    'label' => 'LBL_DEQ_COMMUNICATIONS_MODULE',
+    'width' => '2',
+    'label' => ' ',
+    'sortable' => false,	
     'default' => true,
     'source' => 'non-db',
 	),
-  'name' => array(
-    'width'          => '30', 
-    'label'          => 'LBL_SUBJECT',
-    'link'           => true,
-    'default'        => true,
-    'dynamic_module' => 'MODULE',
-  ),
   'date_start' => array(
     'width' => '5',
     'default' => true,
@@ -30,5 +24,13 @@ $dashletData['deqCommunicationsDashlet']['columns'] = array(
     'width' => '5',
     'label' => 'LBL_DASHLET_TIME',
     'sortable' => false,
+    'default' => true,
   ),
+  'name' => array(
+    'width'          => '30', 
+    'label'          => 'LBL_SUBJECT',
+    'link'           => true,
+    'default'        => true,
+    'dynamic_module' => 'MODULE',
+  ),  
 );

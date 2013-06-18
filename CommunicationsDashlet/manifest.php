@@ -10,9 +10,9 @@ $manifest = array (
         'ULT'
     ),
 	'readme'=>'',
-	'key'=>'dllc',
+	'key'=>'deq',
 	'author' => 'Data Equity LLC',
-	'description' => 'Data Equity LLC Communications Dashlet',
+	'description' => 'My Communications Dashlet by Data Equity LLC ',
 	'icon' => '',
 	'is_uninstallable' => true,
 	'name' => 'deqCommunicationsDashlet',
