@@ -13,7 +13,7 @@ class deqCommunicationsDashlet extends DashletGeneric {
     var $configureTpl = 'custom/modules/Home/Dashlets/deqCommunicationsDashlet/DashletGenericConfigure.tpl'; 
     
     function deqCommunicationsDashlet($id, $def = null) {
-        global $current_user, $app_strings,$odeqCommunicationDashlet;
+        global $current_user, $app_strings,$odeqCommunicationDashlet,$mod_strings;
 		require ('custom/modules/Home/Dashlets/deqCommunicationsDashlet/deqCommunicationsDashlet.data.php');
 		
 		$this->logged_calls = (isset($def['logged_calls'])) ? $def['logged_calls'] : false;
@@ -23,7 +23,6 @@ class deqCommunicationsDashlet extends DashletGeneric {
         if(empty($def['title'])) $this->title = translate('LBL_DEQ_COMMUNICATIONS', 'Home');
         
         $this->searchFields = $dashletData['deqCommunicationsDashlet']['searchFields'];
-        $this->hasScript = true;  // dashlet has javascript attached to it
         $this->columns = $dashletData['deqCommunicationsDashlet']['columns'];
         $this->seedBean = new DPEmail();
 		$odeqCommunicationDashlet = $this;
@@ -87,7 +86,7 @@ class deqCommunicationsDashlet extends DashletGeneric {
   }
   
   function getQuery($ret_array, $params) {
-    $today  = date('Y-m-d', strtotime('-2 MONTH'));
+    $today = gmdate('Y-m-d') . ' 00:00:00';
     $c_assigned_where_sql = $e_assigned_where_sql = '';
     $order_by_sql = str_replace(array('emails.', ), '', $ret_array['order_by']);
     
@@ -96,23 +95,23 @@ class deqCommunicationsDashlet extends DashletGeneric {
     $sql = "";
     if ($this->logged_calls) {
       $sql .= "(SELECT C.id , C.date_start AS date_sent, C.date_start , CONCAT('CALLS: ', C.name) AS name, 
-      C.assigned_user_id, C.date_entered, 'calls' AS data_type FROM calls C 
-      WHERE C.deleted=0 {$c_assigned_where_sql}
+      C.assigned_user_id, C.date_entered, C.parent_id , C.parent_type , 'calls' AS data_type FROM calls C 
+      WHERE C.deleted=0 AND C.assigned_user_id = '{$GLOBALS['current_user']->id}'
       AND C.date_start >= '{$today}' ".str_replace('emails.', 'C.', $where_sql)." )
       ";
     }
+	
     if ($this->archived_emails) {
       if ($this->logged_calls) $sql .= " UNION ";
       $sql .= "(SELECT E.id, E.date_sent, E.date_sent AS date_start, E.name, 
-      E.assigned_user_id, E.date_entered, 'emails' AS data_type FROM emails E 
-      WHERE E.deleted = 0 {$e_assigned_where_sql} 
+      E.assigned_user_id, E.date_entered,E.parent_id , E.parent_type , 'emails' AS data_type FROM emails E 
+      WHERE E.deleted = 0 AND E.assigned_user_id = '{$GLOBALS['current_user']->id}'
       AND E.type = 'inbound' 
       AND E.date_sent >= '{$today}' {$where_sql} ) 
       ";
     }
     
 	$sql .= $order_by_sql;
-    
     return $sql;
   }
   
@@ -143,55 +142,6 @@ class deqCommunicationsDashlet extends DashletGeneric {
     return $sql;
   }
   
-  function displayScript() {
-    global $current_language;
-
-    $mod_strings = return_module_language($current_language, 'Home');
-    $casesImageURL = "\"" . SugarThemeRegistry::current()->getImageURL('Cases.gif') . "\"";
-    
-    $leadsImageURL = "\"" . SugarThemeRegistry::current()->getImageURL('Leads.gif') . "\"";
-    
-    $contactsImageURL = "\"" . SugarThemeRegistry::current()->getImageURL('Contacts.gif') . "\"";
-    
-    $bugsImageURL = "\"" . SugarThemeRegistry::current()->getImageURL('Bugs.gif') . "\"";
-    
-    $tasksURL = "\"" . SugarThemeRegistry::current()->getImageURL('Tasks.gif') . "\"";
-    $script = <<<EOQ
-    <script>
-    function quick_create_overlib(id, theme) {
-        return overlib('<a style=\'width: 150px\' class=\'menuItem\' onmouseover=\'hiliteItem(this,"yes");\' onmouseout=\'unhiliteItem(this);\' href=\'index.php?module=Cases&action=EditView&inbound_email_id=' + id + '\'>' +
-        "<!--not_in_theme!--><img border='0' src='" + {$casesImageURL} + "' style='margin-right:5px'>" + '{$mod_strings['LBL_LIST_CASE']}' + '</a>' +
-
-        
-        "<a style='width: 150px' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' href='index.php?module=Leads&action=EditView&inbound_email_id=" + id + "'>" +
-                "<!--not_in_theme!--><img border='0' src='" + {$leadsImageURL} + "' style='margin-right:5px'>"
-
-                + '{$mod_strings['LBL_LIST_LEAD']}' + "</a>" +
-                
-        "<a style='width: 150px' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' href='index.php?module=Contacts&action=EditView&inbound_email_id=" + id + "'>" +
-                "<!--not_in_theme!--><img border='0' src='" + {$contactsImageURL} + "' style='margin-right:5px'>"
-
-                + '{$mod_strings['LBL_LIST_CONTACT']}' + "</a>" +
-         
-         "<a style='width: 150px' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' href='index.php?module=Bugs&action=EditView&inbound_email_id=" + id + "'>"+
-                "<!--not_in_theme!--><img border='0' src='" + {$bugsImageURL} + "' style='margin-right:5px'>"
-
-                + '{$mod_strings['LBL_LIST_BUG']}' + "</a>" +
-                
-         "<a style='width: 150px' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' href='index.php?module=Tasks&action=EditView&inbound_email_id=" + id + "'>" +
-                "<!--not_in_theme!--><img border='0' src='" + {$tasksURL} + "' style='margin-right:5px'>"
-
-               + '{$mod_strings['LBL_LIST_TASK']}' + "</a>"
-        , CAPTION, '{$mod_strings['LBL_QUICK_CREATE']}'
-        , STICKY, MOUSEOFF, 3000, CLOSETEXT, '<div style="float:right"><!--not_in_theme!--><img border=0 src="themes/default/images/close_inline.gif"></div>', WIDTH, 150, CLOSETITLE, SUGAR.language.get('app_strings', 'LBL_ADDITIONAL_DETAILS_CLOSE_TITLE'), CLOSECLICK, FGCLASS, 'olOptionsFgClass',
-
-        CGCLASS, 'olOptionsCgClass', BGCLASS, 'olBgClass', TEXTFONTCLASS, 'olFontClass', CAPTIONFONTCLASS, 'olOptionsCapFontClass', CLOSEFONTCLASS, 'olOptionsCloseFontClass');
-    }
-    </script>
-EOQ;
-    return $script;
-  }
-  
   function getDateString($date_db, $date) {
     global $mod_strings;
     static $dates = null;
@@ -213,12 +163,10 @@ EOQ;
         $dte = date('Y-m-d', strtotime("+{$date_diff} DAY"));
         $dates[$dte]  = $weekdays[$i];
       }
-
-      $dates[date('Y-m-d', time()-86400)]  = $mod_strings['LBL_YESTERDAY'];
-      $dates[date('Y-m-d')]                = $mod_strings['LBL_TODAY'];
-      $dates[date('Y-m-d', time()+86400)]  = $mod_strings['LBL_TOMORROW'];
+      $dates[date('Y-m-d', time()-86400)]  = translate('LBL_YESTERDAY', 'Home');
+      $dates[date('Y-m-d')]  = translate('LBL_TODAY', 'Home');
+      $dates[date('Y-m-d', time()+86400)]  = translate('LBL_TOMORROW', 'Home');
     }
-    
     if (isset($dates[$date_db])) {
       $date  = $dates[$date_db];
     }

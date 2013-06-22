@@ -32,5 +32,19 @@ $dashletData['deqCommunicationsDashlet']['columns'] = array(
     'link'           => true,
     'default'        => true,
     'dynamic_module' => 'MODULE',
-  ),  
+  ), 
+  'parent_name' => array(
+        'width' => '20',
+        'label' => 'LBL_LIST_RELATED_TO',
+        'sortable' => false,
+        'dynamic_module' => 'PARENT_TYPE',
+        'link' => true,
+        'id' => 'PARENT_ID',
+        'ACLTag' => 'PARENT',
+        'related_fields' => array(
+            'parent_id',
+            'parent_type'
+        ),
+        'default' => true,
+    ),
 );

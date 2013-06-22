@@ -3,6 +3,7 @@
 $manifest = array(
     'acceptable_sugar_versions' => array('regex_matches' => array("6\\.*", ), ),
     'acceptable_sugar_flavors' => array(
+        'DEV',
         'CE',
         'PRO',
         'ENT',
@@ -28,6 +29,10 @@ $installdefs = array(
      'from' => '<basepath>/Dashlets/deqScheduleDashlet/',
      'to' => 'custom/modules/Tasks/Dashlets/deqScheduleDashlet/',
      ), ),*/
+      'copy' => array( array(
+     'from' => '<basepath>/custom/',
+     'to' => 'custom/',
+     ), ),
     'dashlets' => array( array(
             'from' => '<basepath>/Dashlets/deqScheduleDashlet/',
             'name' => 'deqScheduleDashlet',

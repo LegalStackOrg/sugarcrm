@@ -7,5 +7,5 @@ $dashletMeta['deqScheduleDashlet'] = array(
     'title' => translate('LBL_DEQ_SCHEDULE', 'Home'),
     'description' => 'A customizable Schedule view.',
     'category' => 'Module Views',
-    'icon' => 'custom/modules/Home/Dashlets/deqScheduleDashlet/meeting_24.png',
+    'icon' => 'custom\themes\Sugar5\images\deq-blue32.png',
 );
