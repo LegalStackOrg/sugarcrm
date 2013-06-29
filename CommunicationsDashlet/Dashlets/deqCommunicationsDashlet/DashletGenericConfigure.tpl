@@ -87,14 +87,6 @@
         </td>
     </tr>
     <tr>
-	    <td scope='row'>
-            <img src='{sugar_getimagepath file='ProjectTask.gif'}' alt='' align='absmiddle' border='0'> &nbsp; {$mod_strings.LBL_RECENT_TWEETS} 
-        </td>
-        <td>
-            <input disabled="disabled" type='checkbox' {if $project_tasks_to_start == 'true'}checked{/if} name='project_tasks_to_start' value='true'>
-        </td>
-    </tr>
-    <tr>
     <tr>
     {foreach name=searchIteration from=$searchFields key=name item=params}
         <td scope='row' valign='top'>

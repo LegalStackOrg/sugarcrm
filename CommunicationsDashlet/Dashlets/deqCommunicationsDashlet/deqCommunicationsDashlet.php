@@ -16,8 +16,8 @@ class deqCommunicationsDashlet extends DashletGeneric {
         global $current_user, $app_strings,$odeqCommunicationDashlet,$mod_strings;
 		require ('custom/modules/Home/Dashlets/deqCommunicationsDashlet/deqCommunicationsDashlet.data.php');
 		
-		$this->logged_calls = (isset($def['logged_calls'])) ? $def['logged_calls'] : false;
-        $this->archived_emails = (isset($def['archived_emails'])) ? $def['archived_emails'] : false;
+		$this->logged_calls = (isset($def['logged_calls'])) ? $def['logged_calls'] : true;
+        $this->archived_emails = (isset($def['archived_emails'])) ? $def['archived_emails'] : true;
         parent::DashletGeneric($id, $def);
          
         if(empty($def['title'])) $this->title = translate('LBL_DEQ_COMMUNICATIONS', 'Home');
@@ -37,7 +37,7 @@ class deqCommunicationsDashlet extends DashletGeneric {
           if (strpos($this->lvs->data['data'][$row]['NAME'], 'CALLS: ') === 0) {
             $this->lvs->data['data'][$row]['NAME'] = substr($this->lvs->data['data'][$row]['NAME'], 7);
             $this->lvs->data['data'][$row]['MODULE'] = 'Calls';
-            $this->lvs->data['data'][$row]['DATA_TYPE'] = '<img alt="" src="custom/modules/Home/Dashlets/deqCommunicationsDashlet/phone_24.png" />';
+            $this->lvs->data['data'][$row]['DATA_TYPE'] = '<img alt="Call" src="custom/modules/Home/Dashlets/deqCommunicationsDashlet/phone_24.png" />';
             if (empty($this->lvs->data['data'][$row]['DATE_START'])) {
               $this->lvs->data['data'][$row]['DATE_START'] = $this->lvs->data['data'][$row]['DATE_SENT'];
             }                
@@ -46,13 +46,13 @@ class deqCommunicationsDashlet extends DashletGeneric {
             elseif (strpos($this->lvs->data['data'][$row]['NAME'], 'EMAILS: ') === 0) {
             $this->lvs->data['data'][$row]['NAME'] = substr($this->lvs->data['data'][$row]['NAME'], 8);
             $this->lvs->data['data'][$row]['MODULE'] = 'Emails';
-            $this->lvs->data['data'][$row]['DATA_TYPE'] = '<img alt="" src="custom/modules/Home/Dashlets/deqCommunicationsDashlet/email_24.png" />';
+            $this->lvs->data['data'][$row]['DATA_TYPE'] = '<img alt="Email" src="custom/modules/Home/Dashlets/deqCommunicationsDashlet/email_24.png" />';
             $this->lvs->data['data'][$row]['DATE_START'] = $this->lvs->data['data'][$row]['DATE_SENT'];
           } 
             // then type is email
             else {
             $this->lvs->data['data'][$row]['MODULE'] = 'Emails';
-            $this->lvs->data['data'][$row]['DATA_TYPE'] = '<img alt="" src="custom/modules/Home/Dashlets/deqCommunicationsDashlet/email_24.png" />';
+            $this->lvs->data['data'][$row]['DATA_TYPE'] = '<img alt="Email" src="custom/modules/Home/Dashlets/deqCommunicationsDashlet/email_24.png" />';
             $this->lvs->data['data'][$row]['DATE_START'] = $this->lvs->data['data'][$row]['DATE_SENT'];
           }
           
